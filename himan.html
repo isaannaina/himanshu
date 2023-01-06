@@ -1,1 +1,119 @@
-console.log("b")
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <style>
+    h2 {
+      text-align: center;
+      color: rgb(247, 182, 19);
+       
+
+    }
+
+    body {
+      text-align: center;
+    }
+    h4 {
+      text-align: center;
+      color: #050505;
+    }
+
+    p {
+      text-align: center;
+      color: rgb(251, 252, 250)
+      
+    }
+
+    label {
+      text-align: left;
+    }
+      
+
+     button {
+       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      background-color: #fad70e;
+      border: rgb(8, 8, 8);
+      color: rgb(12, 3, 3);
+      padding: 1px 155px;
+      text-align: center;
+      display: inline-block;
+      font-size: 10px;
+      margin: 2px 2px;
+      cursor: pointer;
+    
+    }
+
+
+
+    form {
+
+      color: black;
+      margin: 1px 400px 200px 300px;
+      padding: 0;
+      border: 1px dotted rgb(8, 8, 8);
+      text-align: left;
+      background: rgb(238, 240, 238);
+    }
+
+    body {
+      background-image: url('https://media.istockphoto.com/id/1432854572/photo/young-superman-looking-and-contemplating-towards-salt-lake.jpg?s=612x612&w=is&k=20&c=PrMoWnKNDbToXrTyjdY986naFQCpdsxCpmOZ874Bd18=')
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+</head>
+
+<body>
+  <form action="#" onsubmit="signup(event)">
+    
+  <h2>Book a call</h2></header>
+<h4><B>Book a slot and our representative will call you within hour
+</p></h4>
+
+      <div class="mb-3">
+      <label for="fname" class="form-label">Name:</label><br>
+      <input type="text" class="form-control" id="fname" name="name">
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label><br>
+        <input type="email" class="form-control" id="exampleInputEmail1" name="email">
+        <div class="mb-3">
+          <label for="Number" class="form-label">Phone:</label><br>
+          <input type="tel" class="form-control" id="number" name="call">
+          <div class="mb-3">
+            <label for="calltime" class="form-label">Time for call</label><br>
+            <input type="date" class="form-control" id="call time">
+            <input type="time"><br>
+             <button ><B>click-to-call</B></button>
+            <script>
+             
+
+
+
+              function signup(event) {
+                const name=event.target.name.value
+                const email=event.target.email.value
+                const number=event.target.call.value
+
+             const onject={ name,email,number
+
+             }
+
+      
+              
+                localStorage.setItem(JSON.stringify(name),JSON.stringify(onject))
+              } 
+          
+
+              
+
+                 
+            </script>
+
+          </div>
+  </form>
+  </body>
+
+</html>
