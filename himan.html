@@ -54,10 +54,7 @@
       text-align: left;
       background: rgb(238, 240, 238);
     }
-
-    body {
-      background-image: url('https://media.istockphoto.com/id/1432854572/photo/young-superman-looking-and-contemplating-towards-salt-lake.jpg?s=612x612&w=is&k=20&c=PrMoWnKNDbToXrTyjdY986naFQCpdsxCpmOZ874Bd18=')
-    }
+  
   </style>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -87,25 +84,37 @@
             <input type="date" class="form-control" id="call time">
             <input type="time"><br>
              <button ><B>click-to-call</B></button>
+             </form>
+             <ul id='lists'></ul>
             <script>
              
 
 
 
               function signup(event) {
+                event.preventDefault();
                 const name=event.target.name.value
                 const email=event.target.email.value
                 const number=event.target.call.value
 
-             const onject={ name,email,number
+             const onject={ name,email,number}
 
-             }
+
 
       
               
                 localStorage.setItem(JSON.stringify(name),JSON.stringify(onject))
+                username(onject)
               } 
-          
+             function username(onject){
+
+              const items= document.getElementById('lists')
+              items.innerHTML= items.innerHTML+`<li>${onject.name}- ${onject.email} - ${onject.number}</li>`
+             // const childe= document.createElement('li')
+              //child.textContent=onject.name+ '-'+onject.email+ '-'+onject.number
+             //items.appendChild(childe)
+             }
+
 
               
 
