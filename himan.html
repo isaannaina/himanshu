@@ -124,7 +124,24 @@
                    
                    
                }
+               const edit=document.createElement('input')
+                edit.type="button"
+                edit.value='edit'
+                edit.onclick=()=>
+                {
+                  localStorage.removeItem(onject.name)
+                  items.removeChild(childele)
+                  document.getElementById('fname')= onject.name
+                  document.getElementById('exampleInputEmail1')= onject.email
+                  document.getElementById('number')= onject.number
+
+                }
+
+
+
+
               childele.appendChild(deletebutton)
+              childele.appendChild(edit)
               items.appendChild(childele)
 
             }
