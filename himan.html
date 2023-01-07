@@ -103,19 +103,31 @@
 
       
               
-                localStorage.setItem(JSON.stringify(name),JSON.stringify(onject))
+                localStorage.setItem(onject.name,JSON.stringify(onject))
                 username(onject)
               } 
              function username(onject){
 
               const items= document.getElementById('lists')
-              items.innerHTML= items.innerHTML+`<li>${onject.name}- ${onject.email} - ${onject.number}</li>`
-             // const childe= document.createElement('li')
-              //child.textContent=onject.name+ '-'+onject.email+ '-'+onject.number
-             //items.appendChild(childe)
-             }
+              const childele= document.createElement('li')
+              childele.textContent=onject.name+onject.email+onject.number
 
+             // items.innerHTML= items.innerHTML+`<li>${onject.name}- ${onject.email} - ${onject.number}</li>`
+               const deletebutton=document.createElement('input')
+               deletebutton.type="button"
+               deletebutton.value='delete'
+               deletebutton.onclick=()=>
+               {
 
+                   localStorage.removeItem(onject.name)
+                   items.removeChild(childele)
+                   
+                   
+               }
+              childele.appendChild(deletebutton)
+              items.appendChild(childele)
+
+            }
               
 
                  
