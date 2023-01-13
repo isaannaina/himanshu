@@ -1,9 +1,6 @@
-var headerTitle= document.getElementById('main-header')
-//headerTitle.style.borderBottom='solid 3px #000'
-headerTitle.style.borderBottom='solid 3px #000'
-//header.Title.textContent="the
-var eaderTitle= document.getElementById('main')
-eaderTitle.style.color='green'
-eaderTitle.style.fontWeight='bold'
-//title.style.color='red'
-console.log('main header')
+var list= document.getElementsByClassName('list-group-item')
+list[2].style.backgroundColor='green'
+list[1].style.fontWeight='bold'
+list[0].style.fontWeight='bold'
+list[3].style.fontWeight='bold'
+list[2].style.fontWeight='bold'
