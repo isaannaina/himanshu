@@ -1,6 +1,11 @@
-var list= document.getElementsByClassName('list-group-item')
-list[2].style.backgroundColor='green'
-list[1].style.fontWeight='bold'
-list[0].style.fontWeight='bold'
-list[3].style.fontWeight='bold'
-list[2].style.fontWeight='bold'
+var title= document.querySelectorAll('.list-group-item')
+title[1].style.backgroundColor='green'
+title[2].textContent=''
+
+var title= document.querySelector('input')
+//title.value='hell'
+//var odd= document.querySelectorAll('li:nth-child(odd)')
+///for(i=0;i<odd.length;i++)
+//{
+    //odd[i].style.backgroundColor='#CCC'
+//}
