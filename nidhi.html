@@ -74,6 +74,40 @@ item.appendChild(editBtn);
     // Delete selected item
     selectedItem.parentNode.removeChild(selectedItem);
   }
+    //load data from local storage on page load
+    window.onload = function() {
+    var expenses = localStorage.getItem("expenses") ? JSON.parse(localStorage.getItem("expenses")) : [];
+    var list = document.getElementById("expenseList");
+    for (var i = 0; i < expenses.length; i++) {
+      var expense = expenses[i];
+      var item = document.createElement("li");
+      item.innerHTML = expense.amount + " - " + expense.category + " (" + expense.select + ")";
+      var btn = document.createElement("BUTTON");
+      btn.innerHTML = "Delete";
+      btn.onclick = function(){
+        item.parentNode.removeChild(item);
+        var expenses = JSON.parse(localStorage.getItem("expenses"));
+        var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
+        localStorage.setItem("expenses", JSON.stringify(expenses.filter(expense => expense !== selectedExpense)));
+        item.parentNode.removeChild(item)
+      }
+    var editBtn = document.createElement("BUTTON");
+    editBtn.innerHTML = "Edit";
+    editBtn.onclick = function(){
+      var expenses = JSON.parse(localStorage.getItem("expenses"));
+      var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
+      localStorage.setItem("expenses", JSON.stringify(expenses.filter(expense => expense !== selectedExpense)));
+      item.parentNode.removeChild(item);
+      document.getElementById("amount").value = selectedExpense.amount;
+      document.getElementById("category").value = selectedExpense.category;
+      document.getElementById("fun").value = selectedExpense.select;
+    }
+    item.appendChild(editBtn);
+    item.appendChild(btn);
+    list.appendChild(item);
+    }
+  }
+
   </script>
 </body>
 </html>
