@@ -1,112 +1,85 @@
-
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Expense Tracker</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
 <body>
-  <form>
-    <div class="container">
-    <label for="amount">chooseExpenseAmount:</label>
-    <input type="text" id="amount" name="amount">
-    <label for="category">Choose discriiption:</label>
-    <input type="text" id="category" name="category">
-    <label for="cars">Choose a category:</label>
-    <select name="cars" id="fun">
-      <option value="movie">movie</option>
-      <option value="restruant">restruant</option>
-      <option value="fun">fun</option>
-      <option value="party">party</option>
-    </select> 
-    <button type="button" id="addExpense" >Add Expense</button>
-    </div>
-  </form> 
-  <br>
-  <ul id="expenseList">
-  </ul>
+  posts
   <script>
-  document.getElementById("addExpense").addEventListener("click", addExpense);
-  function addExpense() {
-    // Get user input values
-    var amount = document.getElementById("amount").value;
-    var category = document.getElementById("category").value;
-    var select = document.getElementById("fun").value;
-    // Create new list item
-    var list = document.getElementById("expenseList");
-    var item = document.createElement("li");
-    // Add data to item
-    item.innerHTML = amount + " - " + category + " (" + select + ")";
-    var btn = document.createElement("BUTTON");
-    btn.innerHTML = "Delete";
-    btn.onclick = function(){
-      item.parentNode.removeChild(item);
-      var expenses = JSON.parse(localStorage.getItem("expenses"));
-var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
-localStorage.setItem("expenses", JSON.stringify(expenses.filter(expense => expense !== selectedExpense)));
-item.parentNode.removeChild(item)
-    }
-    var editBtn = document.createElement("BUTTON");
-editBtn.innerHTML = "Edit";
-editBtn.onclick = function(){
-  var expenses = JSON.parse(localStorage.getItem("expenses"));
-var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
-localStorage.setItem("expenses", JSON.stringify(expenses.filter(expense => expense !== selectedExpense)));
-item.parentNode.removeChild(item);
-document.getElementById("amount").value = selectedExpense.amount;
-document.getElementById("category").value = selectedExpense.category;
-document.getElementById("fun").value = selectedExpense.select;
+    const posts = [
+    {title: 'Post one', body: 'This is a post one', createdAt: new Date()},
+    {title: 'Post two', body: 'This is a post two', createdAt: new Date()}
+   ];
+   
+   function getPost() {
+     setTimeout(() => {
+       let output = "";
+       const currentTimestamp = new Date();
+       posts.forEach((post, index) => {
+         const secondsAgo = (currentTimestamp - post.createdAt) / 1000;
+         output += `Post ${index + 1} created ${secondsAgo.toFixed(0)} seconds ago `;
+       });
+       console.log(output)
+     }, 2000);
+   }
+   
+   function createPost(post){
+     return new Promise((resolve,reject)=>{
+       setTimeout(()=>{
+         post.createdAt = new Date();
+         posts.push(post)
+         const error=false
+         if(!error)
+         {
+           resolve()
+         }else
+         {
+           reject("error")
+         }
+       },2000)
+     })
+   }
+   
+   function deletePost(index) {
+     return new Promise((resolve, reject) => {
+       setTimeout(() => {
+         if (index >= 0 && index < posts.length) {
+           posts.splice(index, 1);
+           resolve();
+         } else {
+           reject("Invalid post index");
+         }
+       }, 2000);
+     });
+   }
 
+const promise1 =Promise.resolve("workd")
+const promise2=10
+const promise3 = Promise.resolve("goodbye")
+Promise.all([promise1,promise2, promise3]).then((values) => console.log(values));
+
+let lastActivityTime = new Date();
+
+function updateLastUserActivityTime() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      lastActivityTime = new Date();
+      resolve();
+    }, 1000);
+  });
 }
-item.appendChild(editBtn);
 
-    
-    item.appendChild(btn);
-    list.appendChild(item);
-    //store data to local storage
-    var expenses = localStorage.getItem("expenses") ? JSON.parse(localStorage.getItem("expenses")) : [];
-    expenses.push({amount: amount, category: category, select: select});
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-  }
-  function deleteExpense() {
-    // Get selected item
-    var selectedItem = document.getElementsByClassName("selected")[0];
-    // Delete selected item
-    selectedItem.parentNode.removeChild(selectedItem);
-  }
-    //load data from local storage on page load
-    window.onload = function() {
-    var expenses = localStorage.getItem("expenses") ? JSON.parse(localStorage.getItem("expenses")) : [];
-    var list = document.getElementById("expenseList");
-    for (var i = 0; i < expenses.length; i++) {
-      var expense = expenses[i];
-      var item = document.createElement("li");
-      item.innerHTML = expense.amount + " - " + expense.category + " (" + expense.select + ")";
-      var btn = document.createElement("BUTTON");
-      btn.innerHTML = "Delete";
-      btn.onclick = function(){
-        item.parentNode.removeChild(item);
-        var expenses = JSON.parse(localStorage.getItem("expenses"));
-        var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
-        localStorage.setItem("expenses", JSON.stringify(expenses.filter(expense => expense !== selectedExpense)));
-        item.parentNode.removeChild(item)
-      }
-    var editBtn = document.createElement("BUTTON");
-    editBtn.innerHTML = "Edit";
-    editBtn.onclick = function(){
-      var expenses = JSON.parse(localStorage.getItem("expenses"));
-      var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
-      localStorage.setItem("expenses", JSON.stringify(expenses.filter(expense => expense !== selectedExpense)));
-      item.parentNode.removeChild(item);
-      document.getElementById("amount").value = selectedExpense.amount;
-      document.getElementById("category").value = selectedExpense.category;
-      document.getElementById("fun").value = selectedExpense.select;
-    }
-    item.appendChild(editBtn);
-    item.appendChild(btn);
-    list.appendChild(item);
-    }
-  }
+createPost({title:'Post four',body:'This is a post four'}).then(() => {
+  updateLastUserActivityTime().then(() => {
+    deletePost(posts.length - 1).then(() => {
+      console.log("All posts: ", posts);
+      console.log("Last activity time: ", lastActivityTime);
+    });
+  });
+});
 
   </script>
 </body>
