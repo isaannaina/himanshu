@@ -1,157 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <style>
-    h2 {
-      text-align: center;
-      color: rgb(247, 182, 19);
-       
-
-    }
-
-    body {
-      text-align: center;
-    }
-    h4 {
-      text-align: center;
-      color: #050505;
-    }
-
-    p {
-      text-align: center;
-      color: rgb(251, 252, 250)
-      
-    }
-
-    label {
-      text-align: left;
-    }
-      
-
-     button {
-       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      background-color: #fad70e;
-      border: rgb(8, 8, 8);
-      color: rgb(12, 3, 3);
-      padding: 1px 155px;
-      text-align: center;
-      display: inline-block;
-      font-size: 10px;
-      margin: 2px 2px;
-      cursor: pointer;
-    
-    }
-
-
-
-    form {
-
-      color: black;
-      margin: 1px 400px 200px 300px;
-      padding: 0;
-      border: 1px dotted rgb(8, 8, 8);
-      text-align: left;
-      background: rgb(238, 240, 238);
-    }
-  
-  </style>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+   header {
+  width: 100%;
+  height: 100px;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 
+#name {
+  margin: 30px 0;
+  font-size: 36px;
+  font-weight: bold;
+  text-shadow: 1px 1px #ccc;
+}
+
+#taskbar {
+  width: 100%;
+  height: 50px;
+  background-color: #333;
+  color: white;
+  position: fixed;
+  top: 50px;
+  left: 0;
+}
+
+#taskbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  line-height: 50px;
+  float: left;
+}
+header {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+main {
+  display: flex;
+}
+
+#featured-post {
+  width: 100%;
+}
+
+#recent-posts {
+  width: 60%;
+}
+
+#sidebar {
+  width: 40%;
+  background-color: #eee;
+  padding: 20px;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+
+  </style>
 </head>
 
 <body>
-  <form action="#" onsubmit="signup(event)">
-    
-  <h2>Book a call</h2></header>
-<h4><B>Book a slot and our representative will call you within hour
-</p></h4>
-
-      <div class="mb-3">
-      <label for="fname" class="form-label">Name:</label><br>
-      <input type="text" class="form-control" id="fname" name="name">
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label><br>
-        <input type="email" class="form-control" id="exampleInputEmail1" name="email">
-        <div class="mb-3">
-          <label for="Number" class="form-label">Phone:</label><br>
-          <input type="tel" class="form-control" id="number" name="call">
-          <div class="mb-3">
-            <label for="calltime" class="form-label">Time for call</label><br>
-            <input type="date" class="form-control" id="call time">
-            <input type="time"><br>
-             <button ><B>click-to-call</B></button>
-             </form>
-             <ul id='lists'></ul>
-            <script>
-             
-
-
-
-              function signup(event) {
-                event.preventDefault();
-                const name=event.target.name.value
-                const email=event.target.email.value
-                const number=event.target.call.value
-
-             const onject={ name,email,number}
-
-
-
-      
-              
-                localStorage.setItem(onject.name,JSON.stringify(onject))
-                username(onject)
-              } 
-             function username(onject){
-
-              const items= document.getElementById('lists')
-              const childele= document.createElement('li')
-              childele.textContent=onject.name+onject.email+onject.number
-
-             // items.innerHTML= items.innerHTML+`<li>${onject.name}- ${onject.email} - ${onject.number}</li>`
-               const deletebutton=document.createElement('input')
-               deletebutton.type="button"
-               deletebutton.value='delete'
-               deletebutton.onclick=()=>
-               {
-
-                   localStorage.removeItem(onject.name)
-                   items.removeChild(childele)
-                   
-                   
-               }
-               const edit=document.createElement('input')
-                edit.type="button"
-                edit.value='edit'
-                edit.onclick=()=>
-                {
-                  localStorage.removeItem(onject.name)
-                  items.removeChild(childele)
-                  document.getElementById('fname')= onject.name
-                  document.getElementById('exampleInputEmail1')= onject.email
-                  document.getElementById('number')= onject.number
-
-                }
-
-
-
-
-              childele.appendChild(deletebutton)
-              childele.appendChild(edit)
-              items.appendChild(childele)
-
-            }
-              
-
-                 
-            </script>
-
-          </div>
-  </form>
+  <body>
+    <header>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#category">Category</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+    <main>
+      <section id="featured-post">
+        <h2>Featured Post</h2>
+        <h3>Post Title</h3>
+        <p>Post content</p>
+      </section>
+      <section id="recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+          <li>
+            <h3>Post Title</h3>
+            <p>Post excerpt</p>
+            <a href="#read-more">Read More</a>
+          </li>
+          <li>
+            <h3>Post Title</h3>
+            <p>Post excerpt</p>
+            <a href="#read-more">Read More</a>
+          </li>
+          <li>
+            <h3>Post Title</h3>
+            <p>Post excerpt</p>
+            <a href="#read-more">Read More</a>
+          </li>
+        </ul>
+      </section>
+      <section id="sidebar">
+        <h2>Sidebar</h2>
+        <p>Sidebar content</p>
+      </section>
+    </main>
+    <footer>
+      <p>Copyright &copy; Your Name</p>
+    </footer>
   </body>
-
+  
+  
+</body>
 </html>
