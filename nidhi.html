@@ -85,7 +85,13 @@ item.appendChild(editBtn);
     
   }
 }
-window.onload = function() {
+window.addEventListener("DOMContentLoaded",() =>{
+  axios.get("https://crudcrud.com/api/f8da698891b2469aadf208cfaf6878de/rajj")
+  .then((response)=>{
+console.log(response)
+  })
+  .catch((err)={
+  })
     var expenses = JSON.parse(localStorage.getItem("expenses"));
     if (expenses) {
         expenses.forEach(function(expense) {
@@ -95,7 +101,7 @@ window.onload = function() {
             list.appendChild(item);
         });
     }
-};
+});
 
   </script>
 </body>
