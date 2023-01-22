@@ -41,8 +41,7 @@
     var btn = document.createElement("BUTTON");
     btn.innerHTML = "Delete";
     btn.onclick = function(){
-      item.parentNode.removeChild(item);
-
+      ;
 
      var expenses = JSON.parse(localStorage.getItem("expenses"));
 var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
@@ -100,6 +99,21 @@ console.log(response)
         });
     }
 });
+btn.onclick = function(){
+  var expenses = JSON.parse(localStorage.getItem("expenses"));
+  var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
+  deleteExpense(selectedExpense.id)
+  item.parentNode.removeChild(item);
+  localStorage.setItem("expenses", JSON.stringify(expenses.filter(expense => expense !== selectedExpense)));
+}
+
+function deleteExpense(id) {
+  axios.delete('https://crudcrud.com/api/f8da698891b2469aadf208cfaf6878de/rajj/' + id)
+    .then(() => {
+      console.log('Expense deleted successfully');
+    })
+    .catch(err => console.log(err));
+}
 
   </script>
 </body>
