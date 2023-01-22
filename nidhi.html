@@ -48,21 +48,26 @@ var selectedExpense = expenses.find(expense => expense.amount === amount && expe
 localStorage.setItem("expenses", JSON.stringify(expenses.filter(expense => expense !== selectedExpense)));
 item.parentNode.removeChild(item)
     }
-
     var editBtn = document.createElement("BUTTON");
 editBtn.innerHTML = "Edit";
 editBtn.onclick = function(){
   var expenses = JSON.parse(localStorage.getItem("expenses"));
-var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
-localStorage.setItem("expenses", JSON.stringify(expenses.filter(expense => expense !== selectedExpense)));
-
-
-item.parentNode.removeChild(item);
-document.getElementById("amount").value = selectedExpense.amount;
-document.getElementById("category").value = selectedExpense.category;
-document.getElementById("fun").value = selectedExpense.select;
-
+  var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
+  updateExpense(selectedExpense);
+  item.parentNode.removeChild(item);
+  document.getElementById("amount").value = selectedExpense.amount;
+  document.getElementById("category").value = selectedExpense.category;
+  document.getElementById("fun").value = selectedExpense.select;
 }
+
+function updateExpense(expense) {
+  axios.put('https://crudcrud.com/api/f8da698891b2469aadf208cfaf6878de/rajj/' + expense.id, expense)
+    .then(() => {
+      console.log('Expense updated successfully');
+    })
+    .catch(err => console.log(err));
+}
+
 item.appendChild(editBtn);
 
 
