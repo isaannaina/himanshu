@@ -2,124 +2,124 @@
 <html>
 <head>
   <title>Expense Tracker</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
-
 </head>
+<title>dinner</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+
 <body>
   <form>
     <div class="container">
-    <label for="amount">chooseExpenseAmount:</label>
-    <input type="text" id="amount" name="amount">
-    <label for="category">Choose discriiption:</label>
-    <input type="text" id="category" name="category">
-    <label for="cars">Choose a category:</label>
-    <select name="cars" id="fun">
-      <option value="movie">movie</option>
-      <option value="restruant">restruant</option>
-      <option value="fun">fun</option>
-      <option value="party">party</option>
+    <label for="Price">choose Price:</label>
+    <input type="text" id="Price" name="Price">
+    <label for="dish">Choose dish:</label>
+    <input type="text" id="dish" name="dish">
+    <label for="table">Choose a table:</label>
+    <select name="table" id="table">
+      <option value="Table-1">Table-1</option>
+      <option value="Table-2">Table-2</option>
+      <option value="Table-3">Table-3</option>
+
     </select> 
-    <button type="button" id="addExpense" >Add Expense</button>
+    <button type="button" id="choose" >add to bill</button>
     </div>
   </form> 
   <br>
-  <ul id="expenseList">
+  <h2>orders</h2>
+    <h3 id="table-1-heading">Table 1</h3>
+  <ul id="table-1">
   </ul>
-  <script>
-
-  document.getElementById("addExpense").addEventListener("click", addExpense);
-  function addExpense() {
-    
-    var amount = document.getElementById("amount").value;
-    var category = document.getElementById("category").value;
-    var select = document.getElementById("fun").value;
-
-    var list = document.getElementById("expenseList");
-    var item = document.createElement("li");
+  <h3 id="table-2-heading">Table 2</h3>
+  <ul id="table-2">
+  </ul>
+  <h3 id="table-3-heading">Table 3</h3>
+  <ul id="table-3">
+  </ul>
+    <script>
+      
+const priceInput = document.getElementById("Price");
+const dishInput = document.getElementById("dish");
+const tableSelect = document.getElementById("table");
+const addButton = document.getElementById("choose")
+addButton.addEventListener("click", function() {
   
-    item.innerHTML = amount + " - " + category + " (" + select + ")";
-    var btn = document.createElement("BUTTON");
-    btn.innerHTML = "Delete";
-    btn.onclick = function(){
-      ;
-
-     var expenses = JSON.parse(localStorage.getItem("expenses"));
-var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
-localStorage.setItem("expenses", JSON.stringify(expenses.filter(expense => expense !== selectedExpense)));
-item.parentNode.removeChild(item)
-    }
-    var editBtn = document.createElement("BUTTON");
-editBtn.innerHTML = "Edit";
-editBtn.onclick = function(){
-  var expenses = JSON.parse(localStorage.getItem("expenses"));
-  var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
-  updateExpense(selectedExpense);
-  item.parentNode.removeChild(item);
-  document.getElementById("amount").value = selectedExpense.amount;
-  document.getElementById("category").value = selectedExpense.category;
-  document.getElementById("fun").value = selectedExpense.select;
-}
-
-function updateExpense(expense) {
-  axios.put('https://crudcrud.com/api/f8da698891b2469aadf208cfaf6878de/rajj/' + expense.id, expense)
-    .then(() => {
-      console.log('Expense updated successfully');
-    })
-    .catch(err => console.log(err));
-}
-
-item.appendChild(editBtn);
-
-
-    item.appendChild(btn);
-    list.appendChild(item);
-    var expenses = localStorage.getItem("expenses") ? JSON.parse(localStorage.getItem("expenses")) : [];
-    expenses.push({amount: amount, category: category, select: select});
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-    axios.post('https://crudcrud.com/api/f8da698891b2469aadf208cfaf6878de/rajj', { expenses: expenses })
- .then((response)=>console.log(response))
- .catch((err)=>console.log(err));
-  
-  function deleteExpense() {
-  
-    var selectedItem = document.getElementsByClassName("selected")[0];
-    selectedItem.parentNode.removeChild(selectedItem);
-    
+  const price = priceInput.value;
+  const dish = dishInput.value;
+  const table = tableSelect.value;
+  let tableHeading;
+  if (table === "Table-1") {
+    tableHeading = document.getElementById("table-1-heading");
+  } else if (table === "Table-2") {
+    tableHeading = document.getElementById("table-2-heading");
+  } else if (table === "Table-3") {
+    tableHeading = document.getElementById("table-3-heading");
   }
-}
-window.addEventListener("DOMContentLoaded",() =>{
-  axios.get("https://crudcrud.com/api/f8da698891b2469aadf208cfaf6878de/rajj")
-  .then((response)=>{
-console.log(response)
-  })
-  .catch((err)={
-  })
-    var expenses = JSON.parse(localStorage.getItem("expenses"));
-    if (expenses) {
-        expenses.forEach(function(expense) {
-            var list = document.getElementById("expenseList");
-            var item = document.createElement("li");
-            item.innerHTML = expense.amount + " - " + expense.category + " (" + expense.select + ")";
-            list.appendChild(item);
-        });
-    }
-});
-btn.onclick = function(){
-  var expenses = JSON.parse(localStorage.getItem("expenses"));
-  var selectedExpense = expenses.find(expense => expense.amount === amount && expense.category === category && expense.select === select);
-  deleteExpense(selectedExpense.id)
-  item.parentNode.removeChild(item);
-  localStorage.setItem("expenses", JSON.stringify(expenses.filter(expense => expense !== selectedExpense)));
-}
+  const newItem = document.createElement("li");
+  newItem.innerHTML = `${dish} - $${price}`;
 
-function deleteExpense(id) {
-  axios.delete('https://crudcrud.com/api/f8da698891b2469aadf208cfaf6878de/rajj/' + id)
-    .then(() => {
-      console.log('Expense deleted successfully');
+  const deleteButton = document.createElement("button");
+  deleteButton.innerHTML = "Delete";
+  deleteButton.classList.add("delete-button");
+  deleteButton.addEventListener("click", function() {
+    newItem.remove();
+    axios.delete(`https://crudcrud.com/api/9312539d818043e78cde1f13f6a8651a/raju/${newItem._id}`)
+    .then(response => {
+        console.log(response);
     })
-    .catch(err => console.log(err));
-}
+    .catch(err => {
+        console.log(err);
+    });
+  });
+
+  
+  newItem.appendChild(deleteButton);
+
+  tableHeading.appendChild(newItem);
+  axios.post('https://crudcrud.com/api/9312539d818043e78cde1f13f6a8651a/raju', {
+  price: priceInput.value,
+  dish: dishInput.value,
+  table: tableSelect.value
+})
+.then(response => {
+  console.log(response);
+})
+.catch(err => {
+  console.log(err);
+});
+
+});
+document.addEventListener('DOMContentLoaded', function(){
+axios.get('https://crudcrud.com/api/9312539d818043e78cde1f13f6a8651a/raju')
+  .then(response => {
+    
+    const data = response.data;
+    for (let i = 0; i < data.length; i++) {
+      const item = data[i];
+      const price = item.price;
+      const dish = item.dish;
+      const table = item.table;
+
+      let tableHeading;
+      if (table === "Table-1") {
+        tableHeading = document.getElementById("table-1-heading");
+      } else if (table === "Table-2") {
+        tableHeading = document.getElementById("table-2-heading");
+      } else if (table === "Table-3") {
+        tableHeading = document.getElementById("table-3-heading");
+      }
+
+      const newItem = document.createElement("li");
+      newItem.innerHTML = `${dish} - $${price}`;
+
+      tableHeading.appendChild(newItem);
+    }
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
+})
 
   </script>
+
 </body>
 </html>
