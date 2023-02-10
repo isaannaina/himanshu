@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Tracker</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    
+    
+    .container {
+      width: 50%;
+      float: left;
+      margin: 10px auto;
+      text-align: center;
+      background: linear-gradient(to right, #73bac7, #252938);
+      padding: 30px;
+      border-radius: 10px;
+    }
+    .container-2 {
+      width: 50%;
+      float: left;
+      margin: 10px auto;
+      text-align: center;
+      background: linear-gradient(to right, #7dd680, #dcf17e);
+      padding: 30px;
+      border-radius: 10px;
+    }
+    form {
+      margin-top: 20px;
+    }
+
+    h2, h3 {
+      text-align: center;
+      margin-top: 2%;
+    }
+    h1 {
+      text-align: center;
+      margin: 2px;
+      font-family: cursive;
+      color: #224cd3;
+    }
+
+    #table-1, #table-2, #table-3 {
+      margin: 2px;
+      background-color: #e9e2e2;
+      border-radius: 10px;
+      padding: 20px;
+      color: red;
+    }
+
+    #choose {
+      margin-top: 20px;
+      width: 100%;
+      background: linear-gradient(to right, #4CAF50, #224cd3);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      color: #191f2e;
+    }
+    
+    #table-1:hover {
+      background: linear-gradient(to right, #506ca8, #1a2336);
+    }
+    #choose:hover {
+      background: linear-gradient(to right, #f4f7f4, #baee7f);
+        
+    }
+    
+    .container:hover {
+      background: linear-gradient(to right, #a26dc0, #b5bac4);
+
+    }
+  </style>
+</head>
+<body>
+  <form>
+   <H1> MAKE AN ORDER</H1>
+    <div class="container">
+      <label for="Price">Choose Price:</label>
+      <input type="text" id="Price" name="Price" class="form-control">
+      <label for="dish">Choose Dish:</label>
+      <input type="text" id="dish" name="dish" class="form-control">
+      <label for="table">Choose a Table:</label>
+      <select name="table" id="table" class="form-control">
+        <option value="Table-1">Table-1</option>
+        <option value="Table-2">Table-2</option>
+        <option value="Table-3">Table-3</option>
+      </select> 
+      <button type="button" id="choose">Add to Bill</button>
+    </div>
+  </form> 
+  <div class="container-2">
+
+  <h2>Orders</h2>
+  <h3 id="table-1-heading">Table 1</h3>
+  <ul id="table-1" class="list-group">
+  </ul>
+  <h3 id="table-2-heading">Table 2</h3>
+  <ul id="table-2" class="list-group">
+  </ul>
+  <h3 id="table-3-heading">Table 3</h3>
+  <ul id="table-3" class="list-group">
+  </ul>
+  </div>
+  <script>
+ document.getElementById("choose").addEventListener("click", function() {
+  try {
+    let price = document.getElementById("Price").value;
+    let dish = document.getElementById("dish").value;
+    let table = document.getElementById("table").value;
+    let tableId = table.toLowerCase();
+  
+    createOrder(price, dish, table);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+  
+  async function createOrder(price, dish, table) {
+  try {
+    let response = await axios.post('https://crudcrud.com/api/653b175d502e4ef1ab1e74f078707462/account', {
+      price: price,
+      dish: dish,
+      table: table
+    });
+    displayOrders();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+  
+  async function displayOrders() {
+    try {
+      let response = await axios.get('https://crudcrud.com/api/653b175d502e4ef1ab1e74f078707462/account');
+      let data = response.data;
+      let table1 = [];
+      let table2 = [];
+      let table3 = [];
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].table === "Table-1") {
+          table1.push(data[i]);
+        }
+        if (data[i].table === "Table-2") {
+          table2.push(data[i]);
+        }
+        if (data[i].table === "Table-3") {
+          table3.push(data[i]);
+        }
+      }
+      updateTable("table-1", table1);
+      updateTable("table-2", table2);
+      updateTable("table-3", table3);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  function updateTable(tableId, tableData) {
+  try {
+    let tableList = document.getElementById(tableId);
+    tableList.innerHTML = "";
+    for (let i = 0; i < tableData.length; i++) {
+      let item = document.createElement("li");
+      item.innerHTML = tableData[i].dish + ": $" + tableData[i].price + " ";
+      let deleteButton = document.createElement("button");
+      deleteButton.innerHTML = "Delete";
+      deleteButton.classList.add("btn", "btn-danger", "btn-sm");
+      if (tableData[i].hasOwnProperty("_id")) {
+        deleteButton.addEventListener("click", function() {
+          deleteOrder(tableData[i]._id);
+        });
+      } else {
+        deleteButton.disabled = true;
+      }
+      item.appendChild(deleteButton);
+      item.classList.add("list-group-item");
+      tableList.appendChild(item);
+    }
+  } catch (error) {
+    console.error("Error updating table:", error);
+  }
+}
+
+async function deleteOrder(id) {
+ 
+  try {
+    await axios.delete(`https://crudcrud.com/api/653b175d502e4ef1ab1e74f078707462/account/${id}`);
+    displayOrders();
+  } catch (error) {
+    console.error(error);
+  }
+}
+  </script>
+</body>
+</html>
